@@ -5,8 +5,12 @@ using namespace std;
 #include <ext/pb_ds/tree_policy.hpp>
 typedef __gnu_pbds::tree<int, __gnu_pbds::null_type, less<int>, __gnu_pbds::rb_tree_tag, __gnu_pbds::tree_order_statistics_node_update> ordered_set;
 
+// order_of_key(k)    : number of elements strictly smaller than k
+// find_by_order(ind) : iterator to set[ind]
+
 template<class T> using pq = priority_queue<T>;
 template<class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
+
 
 #define MAX INT_MAX
 #define MIN INT_MIN
@@ -65,6 +69,7 @@ int lcs(string X, string Y, int m, int n)
                    lcs(X, Y, m - 1, n));
 }
 
+
 void sieve(int n)
 {
     bool prime[n + 1];
@@ -81,6 +86,8 @@ void sieve(int n)
         if (prime[p])
             cout << p << " ";
 }
+// For fast prime factorization
+// store px = smallest prime factor of x
 
 // Ternary Search
     while (hi-lo>1) {
@@ -97,17 +104,27 @@ stack<int> stack;
 queue<int> queue;
 vector<int> v(10, 0);
 
+vector<int> manacher(string s) {
+    string t = "";
+    for (auto c: s) {
+        t += '#', t += c;
+    }
+    t += "#";
 
-vector<int> manacher_odd(string s) {
-    int n = s.size();
-    s = "$" + s + "^";
-    vector<int> p(n + 2);
-    for(int i = 1; i <= n; i++) {
-        while(s[i - p[i]] == s[i + p[i]]) {
+    int n = t.size();
+    t = "$"+t+"^";
+    vector<int> p(n+2);
+    int l = 1, r = 1;
+    for (int i = 1; i <= n; i++) {
+        p[i] = max(0, min(r-i, p[l+(r-i)]));
+        while (t[i-p[i]] == t[i+p[i]])
             p[i]++;
+        if (i+p[i] > r)  {
+            l = i - p[i], r = i + p[i];
         }
     }
-    return vector<int>(begin(p) + 1, end(p) - 1);
+
+    return p;
 }
 
 vector<int> rabin_karp(string const& s, string const& t) {
