@@ -25,21 +25,21 @@ vi parent(MAXN);
 vi setsz(MAXN);
 
 void make_set(ll v) {
-	parent[v] = v;
-	setsz[v] = 1;
+    parent[v] = v;
+    setsz[v] = 1;
 }
 
 ll find_set(ll v) {
-	if (v == parent[v]) return v;
-	else return parent[v] = find_set(parent[v]);
+    if (v == parent[v]) return v;
+    else return parent[v] = find_set(parent[v]);
 }
 
 void union_sets(ll u, ll v) {
-	u = find_set(u);
-	v = find_set(v);
-	if (u != v) {
-		if (setsz[u] < setsz[v]) swap(u,v);
-		parent[v] = u;
-		setsz[u] += setsz[v];
-	}
+    u = find_set(u);
+    v = find_set(v);
+    if (u != v) {
+        if (setsz[u] < setsz[v]) swap(u,v);
+        parent[v] = u;
+        setsz[u] += setsz[v];
+    }
 }

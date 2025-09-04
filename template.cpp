@@ -48,6 +48,13 @@ ll mod_inv(ll a, ll m = MOD) {
     return binpow(a, m - 2);
 }
 
+long long rng() {
+    static std::mt19937 gen(
+            std::chrono::steady_clock::now().time_since_epoch().count());
+    return std::uniform_int_distribution<long long>(0, INT64_MAX)(gen);
+
+}
+
 void binarysearch(int lo, int hi) {
     while (lo <= hi) {
         r = lo + (hi-lo)/2;

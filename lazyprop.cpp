@@ -13,6 +13,7 @@ void push(int v) {
 }
 
 void build(int a[], int v, int tl, int tr) {
+    lazy[v] = 0; // Change accordingly
 	if (tl == tr) t[v] = a[tl];
 	else {
 		int tm = (tl+tr)/2;
